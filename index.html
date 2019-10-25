@@ -20,7 +20,8 @@
     <!-- Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-  <body>
+  <!--Faire en sorte que la fonction start() soit executée sans appuyer sur le bouton-->
+  <body onload="start()">
     <div
       class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
     >
@@ -36,9 +37,10 @@
 
     <div class="container">
       <div class="input-group mb-5 offset-4 col-4">
-        <input id="city-input" type="text" class="form-control" placeholder="Rentrer le nom d'une ville">
+      	<!--par défault la ville choisi pour les prédictions météo est Paris-->
+        <input id="city-input" value="Paris" type="text" class="form-control" placeholder="Rentrer le nom d'une ville">
         <div class="input-group-append">
-          <button id="city-input-button" class="btn btn-success" type="submit">Actualiser</button>
+          <button id="city-input-button" class="btn btn-success" type="submit" onclick="fetchSpecifyCity()">Actualiser</button>
         </div>
       </div>
     </div>
@@ -47,19 +49,16 @@
         <div class="card-deck mb-3 text-center">
           <div class="card mb-4 shadow-sm offset-sm-1">
             <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Aujourd'hui</h4>
+              <h4 class="my-0 font-weight-normal" id = "cityName"> Aujourd'hui | </h4>
             </div>
-            <div class="card-body">
-              <h2 id="today-forecast-main" class="card-title">
+            <div class="card-body" > 
+              <h2 id="today-forecast-main" class="card-title" >
               </h2>
               <div>
                 <p id="today-forecast-more-info"></p>
-                <div id="icon-weather-container" ></div>
-                <h3 id="today-forecast-temp"> </h3>
-              </div>
-              <button type="button" class="btn btn-lg btn-block btn-primary button-load-forecast" onclick='start()'>
-                Quel temps fait'il aujourd'hui ?
-              </button>
+                <div id="icon-weather-container"></div>
+                <h3 id="today-forecast-temp" > </h3>
+              </div>    
             </div>
           </div>
         </div>
