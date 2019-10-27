@@ -33,26 +33,27 @@ function start(nom="") {
     });
 
     //previsions for 3 days
-    apiWeather.fetchThreeDayForecast()
+    apiWeather
+        .fetchThreeDayForecast()
         .then(function (response) {
-            let data = response.data;
+            const data = response.data;
+            let tempo;
+            let maintwo = document.getElementsByClassName("tomorrow-forecast-main");
+            let descriptiontwo = document.getElementsByClassName("tomorrow-forecast-more-info");
+            let icontwo = document.getElementsByClassName("tomorrow-icon-weather-container");
+            let temptwo = document.getElementsByClassName("tomorrow-forecast-temp");
 
-            for(let i=1;i<=3;i++){
-              data.list[i - 1]['Index'] = i - 1;
-              const main = data.list[i-1].weather[0].main;
-              const description = data.list[i-1].weather[0].description;
-              const temp = data.list[i-1].temp.day;
-              const icon = apiWeather.getHTMLElementFromIcon(data.list[i-1].weather[0].icon);
-
-                document.getElementById(`today-forecast-main-d${i}`).innerHTML=main;
-                document.getElementById(`today-forecast-more-info-d${i}`).innerHTML=description;
-                document.getElementById(`icon-weather-container-d${i}`).innerHTML=icon;
-                document.getElementById(`today-forecast-temp-d${i}`).innerHTML=`${temp}°C`;
+            for(let i=0;i<=3;i++){
+                tempo = data.list[i+1].temp.day;
+                maintwo[i].innerHTML = data.list[i+1].weather[0].main;
+                temptwo[i].innerHTML = `${tempo}°C`;
+                icontwo[i].innerHTML = apiWeather.getHTMLElementFromIcon(data.list[i+1].weather[0].icon);
+                descriptiontwo[i].innerHTML = data.list[i+1].weather[0].description;
             }
-            console.log(data);
-
-        });
-        return apiWeather;
+        })
+        .catch(function(error){
+          console.log(error);
+        })       
 }
 
 //changement de la ville
