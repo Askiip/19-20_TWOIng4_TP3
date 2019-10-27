@@ -31,13 +31,33 @@ function start(nom="") {
       // Affiche une erreur
       console.error(error);
     });
+
+    //previsions for 3 days
+    apiWeather.fetchThreeDayForecast()
+        .then(function (response) {
+            let data = response.data;
+
+            for(let i=1;i<=3;i++){
+              data.list[i - 1]['Index'] = i - 1;
+              const main = data.list[i-1].weather[0].main;
+              const description = data.list[i-1].weather[0].description;
+              const temp = data.list[i-1].temp.day;
+              const icon = apiWeather.getHTMLElementFromIcon(data.list[i-1].weather[0].icon);
+
+                document.getElementById(`today-forecast-main-d${i}`).innerHTML=main;
+                document.getElementById(`today-forecast-more-info-d${i}`).innerHTML=description;
+                document.getElementById(`icon-weather-container-d${i}`).innerHTML=icon;
+                document.getElementById(`today-forecast-temp-d${i}`).innerHTML=`${temp}°C`;
+            }
+            console.log(data);
+
+        });
+        return apiWeather;
 }
 
 //changement de la ville
 function fetchSpecifyCity() {
-
     let city = " ";
-
     city = document.getElementById('city-input').value;
     city = null ? document.getElementById('city-input').value : start(city);
 
